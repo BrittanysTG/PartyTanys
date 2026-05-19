@@ -8,17 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-:root {
-  --gold:    #D4AF37;
-  --gold-lt: #F0D060;
-  --gold-dk: #8B6914;
-  --black:   #060500;
-}
-
+:root { --gold:#D4AF37; --gold-lt:#F0D060; --gold-dk:#8B6914; --black:#060500; }
 html, body { height:100%; background:var(--black); overflow:hidden; cursor:default; }
 
-/* Gold Dust Canvas */
 #cvs { position:fixed; inset:0; pointer-events:none; z-index:0; }
 
 /* ═══ ENVELOPE SCREEN ═══ */
@@ -60,7 +52,7 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
   position:absolute; inset:0;
   background:linear-gradient(165deg, #1e1800 0%, #0d0b00 55%, #1a1500 100%);
   border:1.5px solid var(--gold-dk);
-  box-shadow:0 12px 50px rgba(0,0,0,.7), 0 0 0 .5px rgba(212,175,55,.08);
+  box-shadow:0 12px 50px rgba(0,0,0,.7);
   overflow:hidden; z-index:2;
 }
 .env-body::before {
@@ -88,7 +80,7 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 .env-flap.open { transform:perspective(1100px) rotateX(-178deg); }
 
 .seal {
-  position:absolute; top:50%; left:50%; transform:translate(-50%, -55%);
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-55%);
   width:54px; height:54px; border-radius:50%;
   background:radial-gradient(circle at 35% 30%, #F2DC70, #D4AF37 45%, #7A5A10);
   box-shadow:0 3px 14px rgba(212,175,55,.55), 0 0 0 2px rgba(212,175,55,.25);
@@ -96,7 +88,7 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
   font-size:22px; color:#3d2800; z-index:8;
   transition:transform .45s cubic-bezier(.4,0,.2,1), opacity .45s ease;
 }
-.seal.crack { transform:translate(-50%, -55%) scale(1.8) rotate(35deg); opacity:0; }
+.seal.crack { transform:translate(-50%,-55%) scale(1.8) rotate(35deg); opacity:0; }
 
 .env-letter {
   position:absolute; left:14px; right:14px; bottom:8px; height:197px;
@@ -152,6 +144,17 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 .cnr-bl { position:absolute; bottom:10px; left:10px; width:28px; height:28px; border-bottom:1px solid var(--gold-dk); border-left:1px solid var(--gold-dk); }
 .inv-inner-border { position:absolute; inset:22px; border:.5px solid rgba(212,175,55,.10); pointer-events:none; }
 
+/* Card shake */
+.inv-card.bounce { animation:cardShake 0.7s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes cardShake {
+  0%,100%{ transform:translateY(0) rotate(0deg); }
+  15%    { transform:translateY(-10px) rotate(-1deg); }
+  30%    { transform:translateY(5px)  rotate(1deg); }
+  45%    { transform:translateY(-6px) rotate(-.5deg); }
+  60%    { transform:translateY(3px)  rotate(.5deg); }
+  75%    { transform:translateY(-3px) rotate(0deg); }
+}
+
 /* Dividers */
 .div-line { width:100%; height:1px; background:linear-gradient(90deg, transparent, rgba(212,175,55,.45), transparent); margin:22px 0; }
 .div-orn { display:flex; align-items:center; gap:10px; margin:16px 0; color:var(--gold); font-size:15px; }
@@ -166,15 +169,12 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
   font-size:clamp(22px,6vw,36px);
   line-height:1.4;
   display:block;
-  overflow:visible;
   padding:10px 0;
   background:linear-gradient(90deg, #8B6914, #F0D060, #D4AF37, #F0D060, #8B6914);
   background-size:220% auto;
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent; color:transparent;
   animation:shimmer 4.5s linear infinite, glowPulseText 2s ease-in-out infinite;
-  cursor:default;
-  filter:drop-shadow(0 0 8px rgba(212,175,55,.4));
 }
 @keyframes shimmer { to { background-position:220% center; } }
 @keyframes glowPulseText {
@@ -182,27 +182,24 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
   50%     { filter:drop-shadow(0 0 22px rgba(240,208,96,.9)) drop-shadow(0 0 40px rgba(212,175,55,.5)); }
 }
 
-.t-headline { font-family:'Cinzel',serif; font-size:clamp(12px,3vw,15px); font-weight:600; letter-spacing:.32em; text-transform:uppercase; color:var(--gold); margin:6px 0 0; }
+.t-headline { font-family:'Cinzel',serif; font-size:clamp(11px,2.8vw,14px); font-weight:600; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); margin:6px 0 0; }
 .t-script-md { font-family:'Great Vibes',cursive; font-size:clamp(26px,7vw,32px); color:var(--gold-lt); }
 .t-addr { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(16px,3.5vw,18px); color:#ddd8bc; line-height:1.65; }
 
-/* Detail 2-col grid */
 .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 24px; margin:20px 0 22px; }
 .detail-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
 
 /* MAP */
 .map-wrap {
   margin:16px 0 10px; border:1px solid rgba(212,175,55,.35); position:relative; overflow:hidden;
-  box-shadow:0 4px 24px rgba(0,0,0,.6), 0 0 0 1px rgba(212,175,55,.08);
+  box-shadow:0 4px 24px rgba(0,0,0,.6);
 }
 .map-wrap iframe {
   width:100%; height:175px; border:0; display:block;
   filter:grayscale(1) invert(1) hue-rotate(175deg) brightness(.65) contrast(1.15);
   opacity:.88;
 }
-.map-wrap::after {
-  content:''; position:absolute; inset:0; background:rgba(212,175,55,.05); pointer-events:none; z-index:1;
-}
+.map-wrap::after { content:''; position:absolute; inset:0; background:rgba(212,175,55,.05); pointer-events:none; z-index:1; }
 
 /* Buttons */
 .btn-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:12px 0 4px; }
@@ -214,25 +211,6 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
   transition:background .25s, box-shadow .25s, transform .18s;
 }
 .btn-gold:hover { background:rgba(212,175,55,.16); box-shadow:0 0 18px rgba(212,175,55,.25); transform:translateY(-1px); }
-
-.btn-rsvp {
-  font-family:'Cinzel',serif; font-size:11px; letter-spacing:.3em; text-transform:uppercase;
-  color:var(--black);
-  background:linear-gradient(135deg, #D4AF37, #F0D060, #C49A2A);
-  border:none; padding:14px 32px; cursor:pointer; width:100%; margin-top:6px;
-  box-shadow:0 4px 20px rgba(212,175,55,.35);
-  position:relative; overflow:hidden;
-  transition:filter .25s, transform .18s, box-shadow .25s;
-}
-.btn-rsvp::after {
-  content:''; position:absolute; top:-50%; left:-60%;
-  width:40%; height:200%; background:rgba(255,255,255,.25);
-  transform:skewX(-20deg); animation:btnSheen 3.5s ease-in-out infinite;
-}
-@keyframes btnSheen { 0%{left:-60%} 50%,100%{left:130%} }
-.btn-rsvp:hover { filter:brightness(1.12); transform:translateY(-2px); box-shadow:0 6px 28px rgba(212,175,55,.5); }
-.btn-rsvp.confirmed { background:linear-gradient(135deg, #2a5a1a, #3d8c28) !important; color:#b8f0a0 !important; box-shadow:0 4px 20px rgba(60,140,40,.35) !important; }
-.btn-rsvp.confirmed::after { display:none; }
 
 /* Countdown */
 .cd-wrap { margin:4px 0 0; }
@@ -250,24 +228,9 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 @keyframes numTick { 0%{transform:translateY(-4px);opacity:.3} 100%{transform:translateY(0);opacity:1} }
 .cd-uname { font-family:'Cinzel',serif; font-size:8px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-dk); }
 
-/* Entrance animations */
 .a-up { opacity:0; transform:translateY(26px); animation:aUp .9s ease forwards; }
 @keyframes aUp { to { opacity:1; transform:none; } }
 
-/* Card bounce on open */
-.inv-card.bounce {
-  animation: cardShake 0.7s cubic-bezier(.36,.07,.19,.97) both;
-}
-@keyframes cardShake {
-  0%,100%{ transform: translateY(0) rotate(0deg); }
-  15%    { transform: translateY(-10px) rotate(-1deg); }
-  30%    { transform: translateY(5px)  rotate(1deg); }
-  45%    { transform: translateY(-6px) rotate(-.5deg); }
-  60%    { transform: translateY(3px)  rotate(.5deg); }
-  75%    { transform: translateY(-3px) rotate(0deg); }
-}
-
-/* Sparkles on open */
 .sp {
   position:fixed; pointer-events:none; z-index:999; font-size:15px;
   animation:spAnim var(--dur,1s) ease forwards;
@@ -278,10 +241,8 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
   100%{ transform:translate(calc(var(--dx)*1.4),calc(var(--dy)*2.1)) scale(.1) rotate(360deg); opacity:0; }
 }
 
-/* Confetti */
 .conf {
-  position:fixed; pointer-events:none; z-index:998;
-  width:8px; height:8px;
+  position:fixed; pointer-events:none; z-index:998; width:8px; height:8px;
   animation:confFall var(--cf-dur,2s) ease-in var(--cf-del,0s) forwards;
   border-radius:var(--cf-r,0);
 }
@@ -291,7 +252,6 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
   100%{ transform:translate(var(--cf-x),var(--cf-y)) rotate(var(--cf-rot,720deg)) scale(.5); opacity:0; }
 }
 
-/* Toast notification */
 #toast {
   position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(30px);
   background:linear-gradient(135deg, #1a1500, #0d0b00);
@@ -303,7 +263,6 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 }
 #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
-/* Music button */
 #music-btn {
   position:fixed; bottom:22px; right:22px; z-index:60;
   width:44px; height:44px; background:rgba(10,9,0,.85);
@@ -324,7 +283,6 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 <!-- ENVELOPE SCREEN -->
 <div id="env-screen">
   <p class="env-tagline">A Very Special Celebration Awaits…</p>
-
   <div class="env-outer" id="env-outer" onclick="openEnvelope()">
     <div class="env-glow"></div>
     <div class="env-wrap">
@@ -334,7 +292,6 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
       <div class="seal" id="seal">✦</div>
     </div>
   </div>
-
   <p class="env-hint">✦ &nbsp; Click to Open &nbsp; ✦</p>
 </div>
 
@@ -342,17 +299,14 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 <div id="inv-screen">
   <div class="inv-bg">
     <div class="inv-card">
-
       <span class="cnr-tr"></span>
       <span class="cnr-bl"></span>
       <div class="inv-inner-border"></div>
 
-      <!-- Eyebrow -->
       <div class="a-up" style="animation-delay:.10s">
         <p class="t-eyebrow">You are cordially invited to celebrate</p>
       </div>
 
-      <!-- Title -->
       <div class="a-up" style="animation-delay:.28s">
         <div class="div-orn">✦</div>
         <h1 class="t-script-xl">Partyyyy Timeeee</h1>
@@ -363,10 +317,8 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
         </p>
       </div>
 
-      <!-- Date / Time / Location / Map -->
       <div class="a-up" style="animation-delay:.46s">
         <div class="div-line"></div>
-
         <div class="detail-grid">
           <div class="detail-item">
             <p class="t-eyebrow">Date</p>
@@ -377,34 +329,23 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
             <p class="t-script-md">4:30 PM</p>
           </div>
         </div>
-
         <p class="t-eyebrow" style="margin-bottom:8px;">Location</p>
         <p class="t-addr">3061 Fashion Ave<br>Long Beach, CA 90810</p>
 
-        <!-- Embedded Map -->
         <div class="map-wrap">
-          <iframe
-            src="https://maps.google.com/maps?q=3061+Fashion+Ave,+Long+Beach,+CA+90810&output=embed&z=16"
-            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
+          <iframe src="https://maps.google.com/maps?q=3061+Fashion+Ave,+Long+Beach,+CA+90810&output=embed&z=16"
+            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-        <!-- Map action buttons -->
         <div class="btn-row">
           <a class="btn-gold"
              href="https://www.google.com/maps/dir/?api=1&destination=3061+Fashion+Ave,+Long+Beach,+CA+90810"
-             target="_blank" rel="noopener">
-            📍 Directions
-          </a>
-          <button class="btn-gold" onclick="setReminder()">
-            🔔 Remind Me That Day
-          </button>
+             target="_blank" rel="noopener">📍 Directions</a>
+          <button class="btn-gold" onclick="setReminder(event)">🔔 Remind Me That Day</button>
         </div>
-
         <div class="div-line"></div>
       </div>
 
-      <!-- Countdown -->
       <div class="a-up cd-wrap" style="animation-delay:.64s">
         <p class="cd-label">✦ &nbsp; Counting Down &nbsp; ✦</p>
         <div class="cd-grid">
@@ -415,19 +356,15 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
         </div>
       </div>
 
-      <!-- Closing + RSVP -->
       <div class="a-up" style="animation-delay:.82s">
         <div class="div-orn" style="margin-top:22px;">✦</div>
-
         <p class="t-script-md" style="font-size:clamp(24px,6vw,30px); color:var(--gold-lt); margin-bottom:18px; line-height:1.4;">
           I would be grateful<br>to have you there!
         </p>
-
         <p class="t-eyebrow" style="margin-top:4px; letter-spacing:.38em; color:var(--gold-dk);">
           Can&rsquo;t wait to celebrate with you &nbsp;✦
         </p>
       </div>
-
     </div>
   </div>
 </div>
@@ -435,226 +372,171 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 <button id="music-btn" onclick="toggleMusic()" title="Toggle music">♪</button>
 
 <script>
-/* ── GOLD DUST PARTICLES ─────────────────── */
-const cvs = document.getElementById('cvs');
-const cx  = cvs.getContext('2d');
-let W = cvs.width = innerWidth, H = cvs.height = innerHeight;
-const PTS = Array.from({length:100}, () => mkPt());
-function mkPt(yHint) {
-  return { x:Math.random()*W, y:yHint!==undefined?yHint:Math.random()*H,
-    r:Math.random()*1.7+.4, vx:(Math.random()-.5)*.28, vy:-(Math.random()*.45+.08),
-    a:Math.random()*.55+.08, da:(Math.random()-.5)*.007 };
-}
-function drawPts() {
-  cx.clearRect(0,0,W,H);
-  PTS.forEach(p => {
-    p.x+=p.vx; p.y+=p.vy; p.a+=p.da;
-    if(p.a<=.06) p.da=Math.abs(p.da);
-    if(p.a>=.65) p.da=-Math.abs(p.da);
-    if(p.y<-5) Object.assign(p, mkPt(H+5));
-    cx.globalAlpha=p.a; cx.fillStyle='#D4AF37';
-    cx.beginPath(); cx.arc(p.x,p.y,p.r,0,Math.PI*2); cx.fill();
-  });
-  requestAnimationFrame(drawPts);
-}
+/* ── GOLD DUST ─── */
+const cvs=document.getElementById('cvs'), cx=cvs.getContext('2d');
+let W=cvs.width=innerWidth, H=cvs.height=innerHeight;
+const PTS=Array.from({length:100},()=>mkPt());
+function mkPt(y){return{x:Math.random()*W,y:y!==undefined?y:Math.random()*H,r:Math.random()*1.7+.4,vx:(Math.random()-.5)*.28,vy:-(Math.random()*.45+.08),a:Math.random()*.55+.08,da:(Math.random()-.5)*.007};}
+function drawPts(){cx.clearRect(0,0,W,H);PTS.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=p.da;if(p.a<=.06)p.da=Math.abs(p.da);if(p.a>=.65)p.da=-Math.abs(p.da);if(p.y<-5)Object.assign(p,mkPt(H+5));cx.globalAlpha=p.a;cx.fillStyle='#D4AF37';cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fill();});requestAnimationFrame(drawPts);}
 drawPts();
-addEventListener('resize', () => { W=cvs.width=innerWidth; H=cvs.height=innerHeight; });
+addEventListener('resize',()=>{W=cvs.width=innerWidth;H=cvs.height=innerHeight;});
 
-/* ── MP3 MUSIC ───────────────────────────── */
-const bgMusic = new Audio('song.mp3');
-bgMusic.loop = true;
-bgMusic.volume = 0.7;
+/* ── MUSIC — safe load so missing file never crashes the page ─── */
+let bgMusic = null;
 let playing = false;
 
+function initAudio() {
+  if (bgMusic) return;
+  try {
+    bgMusic = new Audio();
+    bgMusic.loop = true;
+    bgMusic.volume = 0.7;
+    bgMusic.src = 'song.mp3';
+  } catch(e) { bgMusic = null; }
+}
+
 function startMusic() {
-  if(playing) return;
-  bgMusic.play().catch(()=>{});
+  if (playing) return;
+  initAudio();
+  if (bgMusic) bgMusic.play().catch(() => {});
   playing = true;
   const btn = document.getElementById('music-btn');
   btn.style.display = 'flex'; btn.textContent = '♪'; btn.classList.remove('muted');
 }
+
 function toggleMusic() {
-  if(playing){
-    bgMusic.pause(); playing = false;
+  if (playing) {
+    if (bgMusic) bgMusic.pause();
+    playing = false;
     document.getElementById('music-btn').textContent = '♫';
     document.getElementById('music-btn').classList.add('muted');
   } else {
-    bgMusic.play().catch(()=>{}); playing = true;
+    initAudio();
+    if (bgMusic) bgMusic.play().catch(() => {});
+    playing = true;
     document.getElementById('music-btn').textContent = '♪';
     document.getElementById('music-btn').classList.remove('muted');
   }
 }
 
-/* ── BOUNCY TITLE LETTERS ────────────────── */
-function buildTitle() {
-  const el = document.getElementById('party-title');
-  const text = 'Partyyyy Timeeee';
-  el.innerHTML = '';
-  [...text].forEach((ch, i) => {
-    const span = document.createElement('span');
-    span.className = 'ltr';
-    span.textContent = ch === ' ' ? '\u00A0' : ch;
-    span.style.setProperty('--ld', (i * 0.12) + 's');
-    span.style.setProperty('--lb', (i * 0.08) + 's');
-    el.appendChild(span);
-  });
-}
-
-/* ── ENVELOPE OPEN ───────────────────────── */
-let opened=false;
+/* ── ENVELOPE OPEN ─── */
+let opened = false;
 function openEnvelope() {
-  if(opened) return; opened=true;
+  if (opened) return; opened = true;
   document.getElementById('env-outer').classList.add('opening');
   document.getElementById('seal').classList.add('crack');
   spawnBurst();
-  setTimeout(()=>document.getElementById('env-flap').classList.add('open'), 380);
-  setTimeout(()=>document.getElementById('env-letter').classList.add('rise'), 1050);
-  setTimeout(()=>{
+  setTimeout(() => document.getElementById('env-flap').classList.add('open'), 380);
+  setTimeout(() => document.getElementById('env-letter').classList.add('rise'), 1050);
+  setTimeout(() => {
     startMusic();
     document.getElementById('env-screen').classList.add('out');
     document.getElementById('inv-screen').classList.add('in');
-    document.body.style.overflow='auto';
-    document.querySelectorAll('.a-up').forEach(el=>{
-      const delay=parseFloat(el.style.animationDelay||'0');
-      el.style.animation='none'; el.style.opacity='0';
+    document.body.style.overflow = 'auto';
+    document.querySelectorAll('.a-up').forEach(el => {
+      const delay = parseFloat(el.style.animationDelay || '0');
+      el.style.animation = 'none'; el.style.opacity = '0';
       el.offsetHeight;
-      el.style.animation=`aUp .9s ease ${delay}s forwards`;
+      el.style.animation = `aUp .9s ease ${delay}s forwards`;
     });
     launchConfetti();
     startCountdown();
-    // Card shake after it settles
     setTimeout(() => {
       const card = document.querySelector('.inv-card');
-      card.classList.remove('bounce');
-      void card.offsetWidth;
-      card.classList.add('bounce');
+      card.classList.remove('bounce'); void card.offsetWidth; card.classList.add('bounce');
     }, 1400);
   }, 2100);
 }
 
 function spawnBurst() {
-  const icons=['✨','⭐','🎉','🎂','🎓','💛','✦','🥂','🌟','🎊','🎈'];
-  const box=document.getElementById('env-outer').getBoundingClientRect();
-  const cx2=box.left+box.width/2, cy2=box.top+box.height/2;
-  for(let i=0;i<22;i++) {
-    setTimeout(()=>{
-      const el=document.createElement('div');
-      el.className='sp'; el.textContent=icons[Math.floor(Math.random()*icons.length)];
-      const angle=Math.random()*Math.PI*2, dist=55+Math.random()*90;
-      el.style.left=cx2+'px'; el.style.top=cy2+'px';
-      el.style.setProperty('--dx',Math.cos(angle)*dist+'px');
-      el.style.setProperty('--dy',(Math.sin(angle)*dist-50)+'px');
-      el.style.setProperty('--dur',(.8+Math.random()*.55)+'s');
+  const icons = ['✨','⭐','🎉','🎂','🎓','💛','✦','🥂','🌟','🎊','🎈'];
+  const box = document.getElementById('env-outer').getBoundingClientRect();
+  const cx2 = box.left + box.width / 2, cy2 = box.top + box.height / 2;
+  for (let i = 0; i < 22; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'sp'; el.textContent = icons[Math.floor(Math.random() * icons.length)];
+      const angle = Math.random() * Math.PI * 2, dist = 55 + Math.random() * 90;
+      el.style.left = cx2 + 'px'; el.style.top = cy2 + 'px';
+      el.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+      el.style.setProperty('--dy', (Math.sin(angle) * dist - 50) + 'px');
+      el.style.setProperty('--dur', (.8 + Math.random() * .55) + 's');
       document.body.appendChild(el);
-      setTimeout(()=>el.remove(),1600);
-    }, i*52);
+      setTimeout(() => el.remove(), 1600);
+    }, i * 52);
   }
 }
 
-/* ── CONFETTI RAIN ───────────────────────── */
 function launchConfetti() {
-  const colors=['#D4AF37','#F0D060','#fff8d0','#8B6914','#ffd700','#ffe97a','#ffffff'];
-  for(let i=0;i<90;i++){
-    setTimeout(()=>{
-      const el=document.createElement('div');
-      el.className='conf';
-      el.style.left=Math.random()*100+'vw'; el.style.top='-12px';
-      el.style.background=colors[Math.floor(Math.random()*colors.length)];
-      el.style.setProperty('--cf-dur',(1.8+Math.random()*2)+'s');
-      el.style.setProperty('--cf-del','0s');
-      el.style.setProperty('--cf-x',(Math.random()-.5)*140+'px');
-      el.style.setProperty('--cf-y',(85+Math.random()*60)+'vh');
-      el.style.setProperty('--cf-rot',(360+Math.random()*720)+'deg');
-      el.style.setProperty('--cf-r',Math.random()>.5?'50%':'2px');
+  const colors = ['#D4AF37','#F0D060','#fff8d0','#8B6914','#ffd700','#ffe97a','#ffffff'];
+  for (let i = 0; i < 90; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'conf';
+      el.style.left = Math.random() * 100 + 'vw'; el.style.top = '-12px';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.setProperty('--cf-dur', (1.8 + Math.random() * 2) + 's');
+      el.style.setProperty('--cf-del', '0s');
+      el.style.setProperty('--cf-x', (Math.random() - .5) * 140 + 'px');
+      el.style.setProperty('--cf-y', (85 + Math.random() * 60) + 'vh');
+      el.style.setProperty('--cf-rot', (360 + Math.random() * 720) + 'deg');
+      el.style.setProperty('--cf-r', Math.random() > .5 ? '50%' : '2px');
       document.body.appendChild(el);
-      setTimeout(()=>el.remove(),4500);
-    }, i*32);
+      setTimeout(() => el.remove(), 4500);
+    }, i * 32);
   }
 }
 
-/* ── RSVP ────────────────────────────────── */
-let rsvpDone=false;
-function rsvp() {
-  if(rsvpDone) return; rsvpDone=true;
-  const btn=document.getElementById('rsvp-btn');
-  btn.classList.add('confirmed');
-  btn.textContent='✓  You\'re on the list!';
-  showToast(); launchConfetti();
-}
-
-function showToast() {
-  const t=document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3500);
-}
-
-/* ── SET DAY-OF REMINDER — iPhone optimized ─── */
-function setReminder() {
+/* ── REMINDER ─── */
+function setReminder(e) {
   const ics = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
-    'PRODID:-//PartyTanys//Invite//EN',
-    'BEGIN:VEVENT',
-    'UID:partytanys-bday-2026@invite',
-    'DTSTAMP:20260101T000000Z',
+    'BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'PRODID:-//PartyTanys//Invite//EN','BEGIN:VEVENT',
+    'UID:partytanys-bday-2026@invite','DTSTAMP:20260101T000000Z',
     'DTSTART;TZID=America/Los_Angeles:20260606T163000',
     'DTEND;TZID=America/Los_Angeles:20260606T210000',
-    'SUMMARY:🎂🎓 Celebrating 23rd Bday & 2026 Grad!',
-    'DESCRIPTION:Party Time! Head to 3061 Fashion Ave\\, Long Beach CA 90810 at 4:30 PM.',
+    'SUMMARY:Party Time! Celebrating 23rd Bday & B.S. Grad!',
+    'DESCRIPTION:Party at 3061 Fashion Ave\\, Long Beach CA 90810 at 4:30 PM.',
     'LOCATION:3061 Fashion Ave\\, Long Beach\\, CA 90810',
-    'BEGIN:VALARM',
-    'TRIGGER:-PT480M',
-    'ACTION:DISPLAY',
-    'DESCRIPTION:🎂 Today is the celebration! Party at 4:30 PM — get cute!',
-    'END:VALARM',
-    'BEGIN:VALARM',
-    'TRIGGER:-PT120M',
-    'ACTION:DISPLAY',
-    'DESCRIPTION:🎉 2 hours until Party Time — 3061 Fashion Ave LB!',
-    'END:VALARM',
-    'BEGIN:VALARM',
-    'TRIGGER:PT0M',
-    'ACTION:DISPLAY',
-    'DESCRIPTION:✨ It\'s Party Time! Head to 3061 Fashion Ave now!',
-    'END:VALARM',
-    'END:VEVENT',
-    'END:VCALENDAR'
+    'BEGIN:VALARM','TRIGGER:-PT480M','ACTION:DISPLAY',
+    'DESCRIPTION:Today is the celebration! Party at 4:30 PM - get cute!','END:VALARM',
+    'BEGIN:VALARM','TRIGGER:-PT120M','ACTION:DISPLAY',
+    'DESCRIPTION:2 hours until Party Time - 3061 Fashion Ave LB!','END:VALARM',
+    'BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY',
+    'DESCRIPTION:It is Party Time! Head to 3061 Fashion Ave now!','END:VALARM',
+    'END:VEVENT','END:VCALENDAR'
   ].join('\r\n');
-
-  // iPhone opens .ics directly in Calendar app
-  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = 'party-reminder.ics';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-
-  const btn  = event.currentTarget;
-  const orig = btn.innerHTML;
-  btn.innerHTML = '✓ Reminder Set!';
-  btn.style.color = '#b8f0a0';
-  btn.style.borderColor = 'rgba(80,200,60,.5)';
+  const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'party-reminder.ics';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  const btn = e.currentTarget, orig = btn.innerHTML;
+  btn.innerHTML = '✓ Reminder Set!'; btn.style.color = '#b8f0a0'; btn.style.borderColor = 'rgba(80,200,60,.5)';
   setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2400);
 }
 
-/* ── COUNTDOWN ───────────────────────────── */
-const prevVals={};
-function startCountdown() { tick(); setInterval(tick,1000); }
+/* ── COUNTDOWN ─── */
+const prevVals = {};
+function startCountdown() { tick(); setInterval(tick, 1000); }
 function tick() {
-  const target = new Date('2026-06-06T16:30:00-07:00'); // 4:30 PM Pacific Daylight Time
-  const diff = target - Date.now();
+  const diff = new Date('2026-06-06T16:30:00-07:00') - Date.now();
   let d=0,h=0,m=0,s=0;
-  if(diff>0){ d=Math.floor(diff/864e5); h=Math.floor(diff%864e5/36e5); m=Math.floor(diff%36e5/6e4); s=Math.floor(diff%6e4/1e3); }
+  if (diff > 0) {
+    d = Math.floor(diff / 864e5);
+    h = Math.floor(diff % 864e5 / 36e5);
+    m = Math.floor(diff % 36e5 / 6e4);
+    s = Math.floor(diff % 6e4 / 1e3);
+  }
   setUnit('cd-d',d); setUnit('cd-h',h); setUnit('cd-m',m); setUnit('cd-s',s);
 }
-function setUnit(id,val) {
-  const el=document.getElementById(id), str=String(val).padStart(2,'0');
-  if(prevVals[id]!==str){ prevVals[id]=str; el.textContent=str; el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
+function setUnit(id, val) {
+  const el = document.getElementById(id), str = String(val).padStart(2,'0');
+  if (prevVals[id] !== str) {
+    prevVals[id] = str; el.textContent = str;
+    el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick');
+  }
 }
 </script>
 </body>
