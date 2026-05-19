@@ -162,8 +162,9 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 .t-eyebrow { font-family:'Cinzel',serif; font-size:10px; letter-spacing:.52em; text-transform:uppercase; color:var(--gold-dk); margin-bottom:4px; }
 
 .t-script-xl {
-  font-family:'Great Vibes',cursive; font-size:clamp(36px,9vw,52px); line-height:1.1;
-  display:flex; flex-wrap:wrap; justify-content:center; gap:0 2px;
+  font-family:'Great Vibes',cursive; font-size:clamp(30px,8vw,46px); line-height:1.25;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:0 1px;
+  overflow:visible; padding:4px 0;
 }
 .t-script-xl .ltr {
   display:inline-block;
@@ -264,6 +265,20 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
 .a-up { opacity:0; transform:translateY(26px); animation:aUp .9s ease forwards; }
 @keyframes aUp { to { opacity:1; transform:none; } }
 
+/* Card bounce on open */
+.inv-card.bounce {
+  animation: cardBounce 0.9s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes cardBounce {
+  0%  { transform: scale(1); }
+  15% { transform: scale(1.04) translateY(-6px); }
+  30% { transform: scale(0.97) translateY(3px); }
+  45% { transform: scale(1.02) translateY(-3px); }
+  60% { transform: scale(0.99) translateY(1px); }
+  75% { transform: scale(1.01) translateY(-1px); }
+  100%{ transform: scale(1)   translateY(0); }
+}
+
 /* Sparkles on open */
 .sp {
   position:fixed; pointer-events:none; z-index:999; font-size:15px;
@@ -353,7 +368,11 @@ html, body { height:100%; background:var(--black); overflow:hidden; cursor:defau
       <div class="a-up" style="animation-delay:.28s">
         <div class="div-orn">✦</div>
         <h1 class="t-script-xl" id="party-title" aria-label="Partyyyy Timeeee"></h1>
-        <p class="t-headline">Birthday &amp; Graduation</p>
+        <p class="t-headline" style="margin-top:10px; line-height:1.7;">
+          Celebrating her 23rd Bday<br>
+          <span style="font-size:.8em; letter-spacing:.22em; color:var(--gold-dk);">&amp;</span>
+          &nbsp;2026 Grad ✦
+        </p>
       </div>
 
       <!-- Date / Time / Location / Map -->
@@ -516,6 +535,10 @@ function openEnvelope() {
     launchConfetti();
     buildTitle();
     startCountdown();
+    // Card bounce after it settles
+    setTimeout(() => {
+      document.querySelector('.inv-card').classList.add('bounce');
+    }, 1200);
   }, 2100);
 }
 
@@ -575,53 +598,58 @@ function showToast() {
   setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-/* ── SET DAY-OF REMINDER (.ics download) ─── */
+/* ── SET DAY-OF REMINDER — iPhone optimized ─── */
 function setReminder() {
   const ics = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Birthday Grad Invite//EN',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'PRODID:-//PartyTanys//Invite//EN',
     'BEGIN:VEVENT',
-    'UID:bday-grad-2026@invite',
+    'UID:partytanys-bday-2026@invite',
     'DTSTAMP:20260101T000000Z',
     'DTSTART;TZID=America/Los_Angeles:20260606T163000',
     'DTEND;TZID=America/Los_Angeles:20260606T210000',
-    'SUMMARY:🎂🎓 Birthday & Graduation Celebration!',
-    'DESCRIPTION:Today is the day! Head to 3061 Fashion Ave\\, Long Beach CA 90810 at 4:30 PM.',
+    'SUMMARY:🎂🎓 Celebrating 23rd Bday & 2026 Grad!',
+    'DESCRIPTION:Party Time! Head to 3061 Fashion Ave\\, Long Beach CA 90810 at 4:30 PM.',
     'LOCATION:3061 Fashion Ave\\, Long Beach\\, CA 90810',
     'BEGIN:VALARM',
-    'TRIGGER;RELATED=START:-PT0S',      // fires exactly at start time
+    'TRIGGER:-PT480M',
     'ACTION:DISPLAY',
-    'DESCRIPTION:⏰ Party starts NOW — 3061 Fashion Ave Long Beach!',
+    'DESCRIPTION:🎂 Today is the celebration! Party at 4:30 PM — get cute!',
     'END:VALARM',
     'BEGIN:VALARM',
-    'TRIGGER;RELATED=START:-PT2H',      // 2-hour heads-up same day
+    'TRIGGER:-PT120M',
     'ACTION:DISPLAY',
-    'DESCRIPTION:🎉 Party in 2 hours — get ready!',
+    'DESCRIPTION:🎉 2 hours until Party Time — 3061 Fashion Ave LB!',
     'END:VALARM',
     'BEGIN:VALARM',
-    'TRIGGER;RELATED=START:-PT8H',      // morning-of nudge
+    'TRIGGER:PT0M',
     'ACTION:DISPLAY',
-    'DESCRIPTION:🎂 Today\'s the celebration! Party at 4:30 PM — 3061 Fashion Ave LB',
+    'DESCRIPTION:✨ It's Party Time! Head to 3061 Fashion Ave now!',
     'END:VALARM',
     'END:VEVENT',
     'END:VCALENDAR'
   ].join('\r\n');
 
+  // iPhone opens .ics directly in Calendar app
   const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'celebration-reminder.ics';
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'party-reminder.ics';
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(a.href);
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 
-  // Brief button feedback
-  const btn = event.currentTarget;
+  const btn  = event.currentTarget;
   const orig = btn.innerHTML;
   btn.innerHTML = '✓ Reminder Set!';
   btn.style.color = '#b8f0a0';
   btn.style.borderColor = 'rgba(80,200,60,.5)';
-  setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2200);
+  setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2400);
 }
 
 /* ── COUNTDOWN ───────────────────────────── */
